@@ -1,0 +1,25 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: surya-canary-ml-app
+description: Pipeline for ML Sales Prediction App with Canary Rollout
+serialPipeline:
+  stages:
+  - targetId: dev
+    profiles: []
+    strategy:
+      canary:
+        runtimeConfig:
+          cloudRun:
+            automaticTrafficControl: true
+        canaryDeployment:
+          percentages: [25,75]
+          verify: false
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: dev
+description: dev canary ml app Run Service
+run:
+  location: projects/faa-gcp-training-14-kfa-0808/locations/us-central1

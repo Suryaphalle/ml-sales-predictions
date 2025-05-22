@@ -3,7 +3,7 @@ steps:
     args:
       [
         'build',
-        '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app:$SHORT_SHA',
+        '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app-pipeline:$SHORT_SHA',
         '.'
       ]
     id: 'Build Docker image'
@@ -12,7 +12,7 @@ steps:
     args:
       [
         'push',
-        'us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app:$SHORT_SHA'
+        'us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app-pipeline:$SHORT_SHA'
       ]
     id: 'Push to Artifact Registry'
 
@@ -20,8 +20,13 @@ steps:
     entrypoint: 'gcloud'
     args:
       [
-        'run', 'deploy', 'surya-cloud-run-ml-app',
-        '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app:$SHORT_SHA',
+        'deploy',
+        'releases',
+        'create',
+        'release-$BUILD_ID',
+        '--delivery-pipeline', 
+        'surya-cloud-run-ml-app-pipeline',
+        '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app-pipeline:$SHORT_SHA',
         '--region', 'us-central1',
         '--platform', 'managed',
         '--allow-unauthenticated',
@@ -32,6 +37,6 @@ steps:
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
-substitutions:
-  _SERVICE_NAME: surya-cloud-run-ml-app
+# substitutions:
+#   _SERVICE_NAME: surya-cloud-run-ml-app-pipeline
 
