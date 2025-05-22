@@ -6,4 +6,4 @@ spec:
   template:
     spec:
       containers:
-      - image: my-app-image
+      - image:  surya-ml-sales-app-image
