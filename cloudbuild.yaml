@@ -26,10 +26,8 @@ steps:
         'release-$BUILD_ID',
         '--delivery-pipeline', 
         'surya-cloud-run-ml-app-pipeline',
-        '--images', 'surya-ml-sales-app-image=us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app-pipeline:$SHORT_SHA',
         '--region', 'us-central1',
-        '--allow-unauthenticated',
-        '--set-env-vars', 'VERSION=$SHORT_SHA'
+        '--images', 'surya-ml-sales-app-image=us-central1-docker.pkg.dev/$PROJECT_ID/surya-ml-sales-prediction/surya-cloud-run-ml-app-pipeline:$SHORT_SHA',
       ]
 
 options:
