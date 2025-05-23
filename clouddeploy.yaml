@@ -1,7 +1,7 @@
 apiVersion: deploy.cloud.google.com/v1
 kind: DeliveryPipeline
 metadata:
-  name: surya-canary-ml-app
+  name: surya-cloud-run-ml-app-pipeline
 description: Pipeline for ML Sales Prediction App with Canary Rollout
 serialPipeline:
   stages:
